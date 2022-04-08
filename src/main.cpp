@@ -41,8 +41,8 @@
 // #define VREF 2.048            // Internal reference of 2.048V
 // #define VFSR VREF/PGA
 #define PGA 128                   // Internal gain = 128
-#define SENSITIVITY 0.002         // Ratio of excitation to output at full scale = 1 mV/V
-#define FSF 981/2                   // Force at full-scale (will result in 1 mV output at 1V excitation)
+#define SENSITIVITY 0.00426       // Ratio of excitation to output at full scale = 4 mV/V
+#define FSF 13000*9.81            // Force at full-scale (will result in 4 mV output at 1V excitation)
 #define FSR (((long int)1<<23)-1) // Full-scale reading
 #define NEWTONS_PER_COUNT FSF/(FSR*PGA*SENSITIVITY)
 #define SENSOR_COUNT 4
@@ -108,9 +108,14 @@ void loop()
 
       sensors_read += 1;
 
-      // float reading = (float)(adc_data*NEWTONS_PER_COUNT);           // in N
-      // float reading = (float)(adc_data*VFSR*1000)/FSR;               // in mV
-      // Serial.println(String(sensor) + ":" + String(reading) + "N");  // directly print float value
+      // float force = (float)(reading*NEWTONS_PER_COUNT);           // in N
+      // // float reading = (float)(adc_data*VFSR*1000)/FSR;               // in mV
+      // Serial.println(String(sensor) + ":" + String(force) + "N");  // directly print float value
+
+      // if (sensors_read >= SENSOR_COUNT) {
+      //   sensors_read = 0;
+      //   Serial.println("");
+      // }
     }
   }
 
